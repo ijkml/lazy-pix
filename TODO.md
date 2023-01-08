@@ -1,3 +1,3 @@
 # TODO
 
-- `package.json` types
+- support `<img>` ?
