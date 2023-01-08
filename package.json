@@ -1,7 +1,7 @@
 {
   "name": "lazy-pix",
   "type": "module",
-  "version": "0.0.1-beta.0",
+  "version": "0.0.1",
   "private": false,
   "packageManager": "pnpm@7.22.0",
   "description": "Simple Vue plugin to lazy-load background images",
