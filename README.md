@@ -16,6 +16,8 @@
 - ✅ Vue & Nuxt
 - ✅ Customizable
 
+<br>
+
 ## How it works
 
 > For the full gist, read [The Complete Guide to Lazy Loading Images](https://css-tricks.com/the-complete-guide-to-lazy-loading-images/) by Rahul Nanwani.
@@ -32,24 +34,26 @@ Here is an overview:
 </template>
 
 <style scoped>
-/* Good ol' CSS */
+/* good ol' css */
 .target {
   background-color: #7a1f1f;
 }
 .target.img-ready {
-  background-image: url('./image-test');
+  background-image: url("./image-test");
 }
 
 /* using bg shorthand and css variable */
 .target {
-  --img: url('');
+  --img: url("");
   background: #7a1f1f var(--img) top center / cover no-repeat;
 }
 .target.img-ready {
-  --img: url('./path/to/image.tiff');
+  --img: url("./path/to/image.tiff");
 }
 </style>
 ```
+
+<br>
 
 ## Installation
 
@@ -66,6 +70,8 @@ yarn add lazy-pix
 ```
 
 > You should probably only choose one :)
+
+<br>
 
 ## Setup & Usage
 
@@ -101,6 +107,8 @@ export default defineNuxtPlugin((nuxtApp) => {
 
 Now, `v-lazy-pix` is available everywhere.
 
+<br>
+
 ## Customization
 
 The default "ready" class is `img-ready` but you can cutomize it globally and per element.
@@ -112,7 +120,7 @@ To customize ready class for an element, pass a string (or string ref) to the di
   <div v-lazy-pix="'yes-image'">
     This div has a bg-img
   </div>
-  <div v-lazy-pix="refString">
+  <div v-lazy-pix="reactiveString">
     This div has a bg-img
   </div>
 </template>
@@ -152,6 +160,10 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.directive('lazy-picasso', lazyPix);
 });
 ```
+
+<br>
+M
+<br>
 
 ## License
 
