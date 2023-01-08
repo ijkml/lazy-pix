@@ -1,6 +1,5 @@
-import type { Directive, Plugin } from 'vue';
-
-type StopObserver = () => void;
+import type { Plugin } from 'vue';
+import { isString, useLazyPix } from './utils';
 
 interface PluginOptions {
   /**
@@ -13,52 +12,6 @@ interface PluginOptions {
   class?: string
 }
 
-function isString(str: any): str is string {
-  return typeof str === 'string' && str !== '';
-}
-
-function useIntersectionObserver(
-  target: Element | null,
-  callback: IntersectionObserverCallback,
-): StopObserver {
-  let observer: IntersectionObserver | null = null;
-
-  if (window && 'IntersectionObserver' in window && target) {
-    observer = new IntersectionObserver(callback, {
-      rootMargin: '0px',
-      threshold: 0.1,
-    });
-    observer.observe(target);
-  }
-
-  const stop = (): void => {
-    if (observer) {
-      observer.disconnect();
-      observer = null;
-    }
-  };
-
-  return stop;
-}
-
-function useLazyPix(readyClass?: string) {
-  const directive: Directive = (el: HTMLElement, binding) => {
-    const stop = useIntersectionObserver(el, ([{ isIntersecting }]) => {
-      if (isIntersecting) {
-        const _class = isString(binding.value)
-          ? binding.value
-          : isString(readyClass)
-            ? readyClass
-            : 'img-ready';
-        el.classList.add(_class);
-        stop();
-      }
-    });
-  };
-
-  return directive;
-}
-
 const vuePlugin: Plugin = {
   install: (app, options: PluginOptions = {}) => {
     // c-ustom name and ready-class
@@ -69,10 +22,11 @@ const vuePlugin: Plugin = {
     }
 
     const name = isString(cName) ? cName : 'lazy-pix';
-    const directive = useLazyPix(cReady);
 
-    app.directive(name, directive);
+    // const directive = useLazyPix(cReady);
+    // app.directive(name, directive);
+    app.directive(name, useLazyPix(cReady));
   },
 };
 
-export { vuePlugin, useLazyPix };
+export { vuePlugin };
