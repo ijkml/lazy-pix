@@ -4,7 +4,7 @@
   "version": "0.0.1-beta.0",
   "private": false,
   "packageManager": "pnpm@7.22.0",
-  "description": "Lazy Picasso",
+  "description": "Simple Vue plugin to lazy-load background images",
   "author": "Moses Laurence<me.mlaure@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/ijkml/lazy-pix#readme",
@@ -12,9 +12,15 @@
     "type": "git",
     "url": "git+https://github.com/ijkml/lazy-pix.git"
   },
-  "bugs": "https://github.com/ijkml/glob-url/issues",
+  "bugs": "https://github.com/ijkml/lazy-pix/issues",
   "keywords": [
-    "Lazy Picasso"
+    "lazy-pic",
+    "vue-lazy-image",
+    "vue-lazy",
+    "nuxt-image",
+    "vue-image",
+    "lazy-bg",
+    "lazy-image"
   ],
   "sideEffects": false,
   "exports": {
