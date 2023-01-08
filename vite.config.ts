@@ -2,7 +2,6 @@ import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
-const resolvePath = (str: string) => resolve(__dirname, str);
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -17,12 +16,11 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolvePath('./lib/index.ts'),
+      entry: resolve(__dirname, './lib/index.ts'),
       name: 'LazyPix',
       formats: ['cjs', 'es'],
       fileName: (format) => {
-        const extension = { es: 'mjs', cjs: 'cjs' };
-        return `index.${extension[format]}`;
+        return `index.${{ es: 'mjs', cjs: 'cjs' }[format]}`;
       },
     },
     copyPublicDir: false,
