@@ -162,8 +162,6 @@ export default defineNuxtPlugin((nuxtApp) => {
 ```
 
 <br>
-M
-<br>
 
 ## License
 
