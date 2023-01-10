@@ -1,7 +1,7 @@
 {
   "name": "lazy-pix",
   "type": "module",
-  "version": "0.1.0",
+  "version": "1.0.0-beta.0",
   "private": false,
   "packageManager": "pnpm@7.22.0",
   "description": "Simple Vue plugin to lazy-load background images",
@@ -50,7 +50,8 @@
     "lint": "eslint .",
     "lintf": "eslint . --fix",
     "typecheck": "vue-tsc --noEmit",
-    "release": "bumpp && npm publish --access=public"
+    "release": "bumpp && npm publish --access=public",
+    "release:beta": "bumpp && npm publish --tag beta --access=public"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.34.0",
