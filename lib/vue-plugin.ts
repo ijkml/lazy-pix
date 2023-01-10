@@ -32,7 +32,7 @@ interface PluginOptions {
     /**
      * Change directive name (global)
      * @hey don't prefix with 'v-'
-     * @default 'v-lazy-img'
+     * @default 'lazy-img'
      */
     name?: string
 
