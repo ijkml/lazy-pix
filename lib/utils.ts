@@ -5,18 +5,17 @@ function isString(str: any): str is string {
 }
 
 function useIntersectionObserver(
-  target: Element | null,
+  target: Element,
   callback: IntersectionObserverCallback,
 ): () => void {
-  let observer: IntersectionObserver | null = null;
+  let observer: IntersectionObserver | null;
 
-  if (window && 'IntersectionObserver' in window && target) {
-    observer = new IntersectionObserver(callback, {
-      rootMargin: '0px',
-      threshold: 0.1,
-    });
-    observer.observe(target);
-  }
+  observer = new IntersectionObserver(callback, {
+    rootMargin: '0px',
+    threshold: 0.1,
+  });
+
+  observer.observe(target);
 
   const stop = (): void => {
     if (observer) {
@@ -30,17 +29,28 @@ function useIntersectionObserver(
 
 function useLazyPix(readyClass?: string) {
   const directive: Directive = (el: HTMLElement, binding) => {
-    const stop = useIntersectionObserver(el, ([{ isIntersecting }]) => {
-      if (isIntersecting) {
-        const _class = isString(binding.value)
-          ? binding.value
-          : isString(readyClass)
-            ? readyClass
-            : 'img-ready';
-        el.classList.add(_class);
-        stop();
-      }
-    });
+    const _class = isString(binding.value)
+      ? binding.value
+      : isString(readyClass)
+        ? readyClass
+        : 'img-ready';
+
+    if (!el || !window)
+      return;
+
+    // we're in the browser and element exists
+    // and IntersectionObserver is supported
+    if ('IntersectionObserver' in window) {
+      const stop = useIntersectionObserver(el, ([{ isIntersecting }]) => {
+        if (isIntersecting) {
+          el.classList.add(_class);
+          stop();
+        }
+      });
+    }
+    else {
+      el.classList.add(_class);
+    }
   };
 
   return directive;
