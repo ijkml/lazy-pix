@@ -1,4 +1,4 @@
-function isString(str: any): str is string {
+function isString(str: unknown): str is string {
   return typeof str === 'string' && str !== '';
 }
 
@@ -7,8 +7,8 @@ function removePrefix(str: string) {
   return str.replace(/^v-/, '');
 }
 
-function isObject(obj: any): obj is object {
-  return obj && typeof obj === 'object';
+function isObject(obj: unknown): obj is object {
+  return typeof obj === 'object' && obj !== null;
 }
 
 function useIntersectionObserver(
