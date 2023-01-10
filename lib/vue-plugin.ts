@@ -1,32 +1,74 @@
 import type { Plugin } from 'vue';
-import { isString, useLazyPix } from './utils';
+import { isObject, isString, removePrefix } from './utils';
+import { useLazyBg, useLazyFg } from './directives';
 
 interface PluginOptions {
   /**
-   * Globally change directive name
+   * Configure `v-lazy-bg` options
    */
-  name?: string
+  bg?: {
+    /**
+     * Change directive name (global)
+     * @hey don't prefix with 'v-'
+     * @default 'lazy-bg'
+     */
+    name?: string
+    /**
+     * Change ready class (global)
+     * @default 'ready-img'
+     */
+    class?: string
+    /**
+     * Whether to disable to enable the directive
+     * @default false
+     */
+    disabled?: boolean
+  }
+
   /**
-   * Globally change ready-class
+   * Configure `v-lazy-img` options
    */
-  class?: string
+  img?: {
+    /**
+     * Change directive name (global)
+     * @hey don't prefix with 'v-'
+     * @default 'v-lazy-img'
+     */
+    name?: string
+
+    /**
+     * Whether to disable to enable the directive
+     * @default false
+     */
+    disabled?: boolean
+  }
+}
+
+function lazyConfig(options: PluginOptions = {}): PluginOptions {
+  return options;
 }
 
 const vuePlugin: Plugin = {
   install: (app, options: PluginOptions = {}) => {
-    // c-ustom name and ready-class
-    let cName, cReady;
-    if (options && typeof options === 'object') {
-      cName = options.name;
-      cReady = options.class;
+    let bg: typeof options.bg = {};
+    let fg: typeof options.img = {};
+
+    if (isObject(options)) {
+      bg = isObject(options.bg) ? options.bg : {};
+      fg = isObject(options.img) ? options.img : {};
     }
 
-    const name = isString(cName) ? cName : 'lazy-pix';
-
-    // const directive = useLazyPix(cReady);
     // app.directive(name, directive);
-    app.directive(name, useLazyPix(cReady));
+
+    if (!bg.disabled) {
+      const bgName = isString(bg.name) ? removePrefix(bg.name) : 'lazy-bg';
+      app.directive(bgName, useLazyBg(bg.class));
+    }
+    if (!fg.disabled) {
+      const fgName = isString(fg.name) ? removePrefix(fg.name) : 'lazy-img';
+      app.directive(fgName, useLazyFg());
+    }
   },
 };
 
-export { vuePlugin };
+export { vuePlugin, lazyConfig };
