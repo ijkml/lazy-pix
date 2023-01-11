@@ -15,7 +15,7 @@ interface PluginOptions {
     name?: string
     /**
      * Change ready class (global)
-     * @default 'ready-img'
+     * @default 'img-ready'
      */
     class?: string
     /**
