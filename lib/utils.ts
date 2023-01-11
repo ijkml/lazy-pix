@@ -18,8 +18,8 @@ function useIntersectionObserver(
   let observer: IntersectionObserver | null;
 
   observer = new IntersectionObserver(callback, {
-    rootMargin: '0px',
-    threshold: 0.1,
+    rootMargin: '100px',
+    threshold: 0,
   });
 
   observer.observe(target);
