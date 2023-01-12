@@ -1,32 +1,39 @@
 import type { Plugin } from 'vue';
-import { isString, useLazyPix } from './utils';
+import { isString, removePrefix } from './utils';
+import { useLazyPix } from './directives';
 
 interface PluginOptions {
   /**
-   * Globally change directive name
+   * Change directive name
+   * @hey don't prefix with 'v-'
+   * @default 'lazy-pix' => 'v-lazy-pix'
    */
   name?: string
   /**
-   * Globally change ready-class
+   * Change default ready class for background images
+   * (global)
+   * @default 'img-ready'
    */
   class?: string
 }
 
+function lazyConfig(options: PluginOptions = {}): PluginOptions {
+  return options;
+}
+
 const vuePlugin: Plugin = {
   install: (app, options: PluginOptions = {}) => {
-    // c-ustom name and ready-class
-    let cName, cReady;
-    if (options && typeof options === 'object') {
-      cName = options.name;
-      cReady = options.class;
+    let dName: typeof options.name;
+    let dClass: typeof options.class;
+
+    if (typeof options === 'object' && options !== null) {
+      dName = options.name;
+      dClass = options.class;
     }
 
-    const name = isString(cName) ? cName : 'lazy-pix';
-
-    // const directive = useLazyPix(cReady);
-    // app.directive(name, directive);
-    app.directive(name, useLazyPix(cReady));
+    const directiveName = isString(dName) ? removePrefix(dName) : 'lazy-pix';
+    app.directive(directiveName, useLazyPix(dClass));
   },
 };
 
-export { vuePlugin };
+export { vuePlugin, lazyConfig };

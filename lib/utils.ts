@@ -1,22 +1,24 @@
-import type { Directive } from 'vue';
-
-function isString(str: any): str is string {
+function isString(str: unknown): str is string {
   return typeof str === 'string' && str !== '';
 }
 
+function removePrefix(str: string) {
+  // remove possible 'v-' prefix
+  return str.replace(/^v-/, '');
+}
+
 function useIntersectionObserver(
-  target: Element | null,
+  target: Element,
   callback: IntersectionObserverCallback,
 ): () => void {
-  let observer: IntersectionObserver | null = null;
+  let observer: IntersectionObserver | null;
 
-  if (window && 'IntersectionObserver' in window && target) {
-    observer = new IntersectionObserver(callback, {
-      rootMargin: '0px',
-      threshold: 0.1,
-    });
-    observer.observe(target);
-  }
+  observer = new IntersectionObserver(callback, {
+    rootMargin: '100px',
+    threshold: 0,
+  });
+
+  observer.observe(target);
 
   const stop = (): void => {
     if (observer) {
@@ -28,22 +30,4 @@ function useIntersectionObserver(
   return stop;
 }
 
-function useLazyPix(readyClass?: string) {
-  const directive: Directive = (el: HTMLElement, binding) => {
-    const stop = useIntersectionObserver(el, ([{ isIntersecting }]) => {
-      if (isIntersecting) {
-        const _class = isString(binding.value)
-          ? binding.value
-          : isString(readyClass)
-            ? readyClass
-            : 'img-ready';
-        el.classList.add(_class);
-        stop();
-      }
-    });
-  };
-
-  return directive;
-}
-
-export { isString, useLazyPix };
+export { isString, removePrefix, useIntersectionObserver };

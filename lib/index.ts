@@ -1,2 +1,2 @@
-export { vuePlugin as vLazyPix } from './vue-plugin';
-export { useLazyPix } from './utils';
+export { vuePlugin as vLazyPix, lazyConfig } from './vue-plugin';
+export { useLazyPix } from './directives';
