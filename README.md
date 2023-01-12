@@ -156,7 +156,7 @@ To customize ready class for an element, pass a string (or string variable) to t
 
 ### Ready class per element
 
-> **Note**: Bg images only
+> **Note**: Bg images only. Per-element classes will always override global.
 
 ```vue
 <template>
@@ -168,8 +168,6 @@ To customize ready class for an element, pass a string (or string variable) to t
   </div>
 </template>
 ```
-
-> **Note**: per-element classes will always override global.
 
 ### Vue Globally
 
@@ -211,9 +209,9 @@ export default defineNuxtPlugin((nuxtApp) => {
 
 There are a few things to take note of:
 
-- When using Vite, you need to pass an absolute or resolved image URL. This is due to Vite's [Static Asset Handling](https://vitejs.dev/guide/assets.html). This doesn't apply to background images, though.
+- When lazy loading `<img>` with Vite, you need to pass an absolute or resolved image URL due to Vite's [Static Asset Handling](https://vitejs.dev/guide/assets.html). This doesn't apply to background images, though.
 - This plugin does not support loading multiple images as in `srcset` or `sources`. To do that use the browser's `loading="lazy"`.
-- On browsers without `IntersectionObserver` support, the images are loaded normally. While it is possible to lazy load using scroll/resize event listeners, it is less efficient and too much of it can lead to a negative impact on performance. From the frying pan into fire.
+- On browsers without `IntersectionObserver` support, the images are loaded normally. While it is possible to lazy load using scroll/resize event listeners, it is less efficient and too much of it can lead to a negative impact on performance. From the frying pan into fire, they say.
 
 ## License
 
