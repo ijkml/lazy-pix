@@ -149,7 +149,7 @@ Lazy loading background images work by adding a class to the element when the im
 
 ## Customization
 
-The default "ready" class is `img-ready` but you can cutomize it globally and per element.
+The default "ready" class is `img-ready` but you can customize it globally and per element.
 
 To customize ready class for an element, pass a string (or string variable) to the directive.
 
