@@ -7,10 +7,6 @@ function removePrefix(str: string) {
   return str.replace(/^v-/, '');
 }
 
-function isObject(obj: unknown): obj is object {
-  return typeof obj === 'object' && obj !== null;
-}
-
 function useIntersectionObserver(
   target: Element,
   callback: IntersectionObserverCallback,
@@ -34,4 +30,4 @@ function useIntersectionObserver(
   return stop;
 }
 
-export { isString, isObject, removePrefix, useIntersectionObserver };
+export { isString, removePrefix, useIntersectionObserver };

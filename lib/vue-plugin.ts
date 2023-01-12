@@ -1,47 +1,20 @@
 import type { Plugin } from 'vue';
-import { isObject, isString, removePrefix } from './utils';
-import { useLazyBg, useLazyFg } from './directives';
+import { isString, removePrefix } from './utils';
+import { useLazyPix } from './directives';
 
 interface PluginOptions {
   /**
-   * Configure `v-lazy-bg` options
+   * Change directive name
+   * @hey don't prefix with 'v-'
+   * @default 'lazy-pix' => 'v-lazy-pix'
    */
-  bg?: {
-    /**
-     * Change directive name (global)
-     * @hey don't prefix with 'v-'
-     * @default 'lazy-bg'
-     */
-    name?: string
-    /**
-     * Change ready class (global)
-     * @default 'img-ready'
-     */
-    class?: string
-    /**
-     * Whether to disable to enable the directive
-     * @default false
-     */
-    disabled?: boolean
-  }
-
+  name?: string
   /**
-   * Configure `v-lazy-img` options
+   * Change default ready class for background images
+   * (global)
+   * @default 'img-ready'
    */
-  img?: {
-    /**
-     * Change directive name (global)
-     * @hey don't prefix with 'v-'
-     * @default 'lazy-img'
-     */
-    name?: string
-
-    /**
-     * Whether to disable to enable the directive
-     * @default false
-     */
-    disabled?: boolean
-  }
+  class?: string
 }
 
 function lazyConfig(options: PluginOptions = {}): PluginOptions {
@@ -50,24 +23,16 @@ function lazyConfig(options: PluginOptions = {}): PluginOptions {
 
 const vuePlugin: Plugin = {
   install: (app, options: PluginOptions = {}) => {
-    let bg: typeof options.bg = {};
-    let fg: typeof options.img = {};
+    let dName: typeof options.name;
+    let dClass: typeof options.class;
 
-    if (isObject(options)) {
-      bg = isObject(options.bg) ? options.bg : {};
-      fg = isObject(options.img) ? options.img : {};
+    if (typeof options === 'object' && options !== null) {
+      dName = options.name;
+      dClass = options.class;
     }
 
-    // app.directive(name, directive);
-
-    if (!bg.disabled) {
-      const bgName = isString(bg.name) ? removePrefix(bg.name) : 'lazy-bg';
-      app.directive(bgName, useLazyBg(bg.class));
-    }
-    if (!fg.disabled) {
-      const fgName = isString(fg.name) ? removePrefix(fg.name) : 'lazy-img';
-      app.directive(fgName, useLazyFg());
-    }
+    const directiveName = isString(dName) ? removePrefix(dName) : 'lazy-pix';
+    app.directive(directiveName, useLazyPix(dClass));
   },
 };
 
