@@ -4,7 +4,7 @@
   "version": "1.0.0-beta.3",
   "private": false,
   "packageManager": "pnpm@7.22.0",
-  "description": "Simple Vue plugin to lazy-load background images",
+  "description": "Simple Vue and Nuxt plugin to lazy-load images",
   "author": "Moses Laurence<me.mlaure@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/ijkml/lazy-pix#readme",
@@ -20,7 +20,8 @@
     "nuxt-image",
     "vue-image",
     "lazy-bg",
-    "lazy-image"
+    "lazy-image",
+    "lazy-img"
   ],
   "sideEffects": false,
   "exports": {
